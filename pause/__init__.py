@@ -32,9 +32,8 @@ THE SOFTWARE.
 import sys
 from datetime import datetime
 import time as pytime
-from time import sleep
-if sys.version_info[0] >= 3:
-            from datetime import timezone
+from asyncio import sleep
+from datetime import timezone
 
 def until(time):
     """
@@ -46,7 +45,7 @@ def until(time):
     # Convert datetime to unix timestamp and adjust for locality
     if isinstance(time, datetime):
         # If we're on Python 3 and the user specified a timezone, convert to UTC and get tje timestamp.
-        if sys.version_info[0] >= 3 and time.tzinfo:
+        if time.tzinfo:
             end = time.astimezone(timezone.utc).timestamp()
         else:
             zoneDiff = pytime.time() - (datetime.now()- datetime(1970, 1, 1)).total_seconds()
